@@ -8,14 +8,14 @@ syms om tau al be positive;
 % p(d) ~ N(m, om^(-1))
 
 % Calculation of p(d|m,om)
-pd_mom_nn = exp(-1/2*om*(d-m)^2);   % p(d|m,om) - not normalized
-nc = int(pd_mom_nn,d,-inf,inf);    
-pd_mom = pd_mom_nn/nc;            % p(d|m,om) - normalized
+pd_mtau_nn = exp(-1/2*om*(d-m)^2);   % p(d|m,tau) - not normalized
+nc = int(pd_mtau_nn,d,-inf,inf);         % tau is given implicitly
+pd_mom = pd_mtau_nn/nc;            % p(d|m,om) - normalized
 
 
 % Calculation of p(m|tau):
 pm_tau_nn = exp(-1/2*om*tau*m^2);    % p(m|tau) - not normalized
-nconst = int(pm_tau_nn,tau,0,inf);      
+nconst = int(pm_tau_nn,m,-inf,inf);      
 pm_tau = pm_tau_nn/nc;              % p(m|tau) - normalized
 
 
@@ -26,12 +26,12 @@ nconst_tau = int(ptau_nn,tau,0,inf);
 ptau = ptau_nn/nconst_tau;            % p(tau) - normalized
 
 % Bayes:
-pm_d = simplify(pd_mom*pm_tau*ptau);  % p(m,om|d) - not normalized
+pm_d = simplify(pd_mtau_nn*pm_tau*ptau);  % p(m,om|d) - not normalized
 % log:
 l_pmom_d = simplify(log(pm_d));       % log(p(m,om|d)) - not normalized
 
 g = gradient(l_pmom_d,[m,tau]);
-H = hessian(l_pmom_d,[m, tau]);
+H = hessian(l_pmom_d,[m,tau]);
 [m_hat,tau_hat] = solve(g,[m,tau])
 %syms(H,m,m_hat)
 sigma = inv(-H)
