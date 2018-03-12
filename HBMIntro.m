@@ -23,6 +23,12 @@ pom = pom_nn/nkom;
 % simplify = try to make the expression simpler
 pmom_d = simplify(pd_mom*pm_om*pom)  % not normalized
 lpmom_d = simplify(log(pmom_d))      % not normalized
+
+% Laplace:
+g = gradient(lpmom_d,[om,m]);
+H = hessian(lpmom_d,[om,m]);
+[m_hat,w_hat] = solve(g,[m,om])
+
 % collect = pick the variable om out of the expression lpmom such that it
 % is easier to integrate
 tmp_om = simplify(exp(collect(lpmom_d,om))) % temporary omega
