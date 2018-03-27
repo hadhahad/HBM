@@ -38,13 +38,13 @@ d = 2; al = 1.1; be = 2; om = 1;
 %%
 % Laplace:
 g = gradient(simplify(subs(l_pmtau_d)),[m,tau]);
-[m_hat_lap,tau_hat_lap] = vpasolve(subs(g),[m,tau]);
+[m_hat_lap,tau_hat_lap] = vpasolve(subs(g),[m,tau])
 m_hat_lap = m_hat_lap(imag(m_hat_lap) == 0);
 tau_hat_lap = tau_hat_lap(imag(tau_hat_lap) == 0);
 
 % Hessian evaluation:
 H = hessian(subs(l_pmtau_d),[m,tau]);
-Sigma = inv(-subs(H,[m,tau],[m_hat_lap,tau_hat_lap]));
+Sigma = inv(subs(H,[m,tau],[m_hat_lap,tau_hat_lap]));
 
 %%
 % Plot Laplace:
@@ -52,21 +52,21 @@ Sigma = inv(-subs(H,[m,tau],[m_hat_lap,tau_hat_lap]));
 vm = d-2:0.01:d+2;                    % range of m
 vtau = 0.01:0.001:0.75;                    % range of tau
 
-figure(1)
-mnorm = normpdf(vm,m_hat_lap,Sigma(1,1));
-plot(vm,mnorm)
-xlabel('m');
-ylabel('p(m|d)');
-title('Laplace, p(m|d)');
-grid
+% figure(1)
+% mnorm = normpdf(vm,m_hat_lap,Sigma(1,1));
+% plot(vm,mnorm)
+% xlabel('m');
+% ylabel('p(m|d)');
+% title('Laplace, p(m|d)');
+% grid
 
-figure(2)
-taunorm = normpdf(vtau,tau_hat_lap,Sigma(2,2));
-plot(vtau,taunorm)
-xlabel('\tau');
-ylabel('p(\tau|d)');
-title('Laplace, p(\tau|d)');
-grid
+% figure(2)
+% taunorm = normpdf(vtau,tau_hat_lap,Sigma(2,2));
+% plot(vtau,taunorm)
+% xlabel('\tau');
+% ylabel('p(\tau|d)');
+% title('Laplace, p(\tau|d)');
+% grid
 
 %%
 % Variational Bayes: 
