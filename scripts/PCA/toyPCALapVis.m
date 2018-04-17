@@ -8,7 +8,7 @@ for i = 1:1:100
     for j = 1:1:100
         a = a_line(i);
         x = x_line(j);
-        pr_density(i,j) = sqrt(2*pi*r_e)*exp(-(d-a*x)^2/(2*r_e));
+        pr_density(i,j) = sqrt(2*pi*r_e)^(-1) * exp(-(d-a*x)^2/(2*r_e));
     end
 end
 
@@ -23,8 +23,9 @@ plot(0, 0, '*k');
 
 xlabel('a');
 ylabel('x');
-title('Toy PCA - Laplace');
+title('Toy PCA - Laplace, d=1');
 legend('p(d|a,x)', 'solution');
-grid on
+grid on;
+colorbar;
 
 end

@@ -9,7 +9,7 @@ for i = 1:1:100
     for j = 1:1:100
         a = a_line(i);
         x = x_line(j);
-        pr_density(i,j) = sqrt(2*pi*r_e) * exp(-(d-a*x)^2/(2*r_e));
+        pr_density(i,j) = sqrt(2*pi*r_e)^(-1) * exp(-(d-a*x)^2/(2*r_e));
     end
 end
 
@@ -25,8 +25,9 @@ plot(a_res, x_res, '*k');
 
 xlabel('a');
 ylabel('x');
-title('Toy PCA - VB');
+title('Toy PCA - VB, d=1');
 legend('p(d|a,x)', 'solution variability', 'solution');
-grid on
+grid on;
+colorbar;
 
 end

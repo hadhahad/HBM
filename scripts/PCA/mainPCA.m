@@ -3,7 +3,7 @@ clear;
 
 %% Numerical Values:
 d = 1;
-r_e = 0.5;
+r_e = 1;
 r_a = 2;
 r_x = 2;
 
