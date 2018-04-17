@@ -1,4 +1,4 @@
-function toyPCALapVis(d, r_e, a_res, x_res)
+function toyPCALapVis(d, r_e, r_a, r_x, a_res, x_res)
 
 a_line = -2.5:0.05:2.5;
 x_line = -2.5:0.05:2.5;
@@ -8,7 +8,8 @@ for i = 1:1:100
     for j = 1:1:100
         a = a_line(i);
         x = x_line(j);
-        pr_density(i,j) = sqrt(2*pi*r_e)^(-1) * exp(-(d-a*x)^2/(2*r_e));
+%         pr_density(i,j) = sqrt(2*pi*r_e)^(-1) * exp(-(d-a*x)^2/(2*r_e));
+        pr_density(i,j) = exp(-(d-a*x)^2/(2*r_e) - a^2/(2*r_a) - x^2/(2*r_x));
     end
 end
 
@@ -26,6 +27,6 @@ ylabel('x');
 title('Toy PCA - Laplace, d=1');
 legend('p(d|a,x)', 'solution');
 grid on;
-colorbar;
+% colorbar;
 
 end
