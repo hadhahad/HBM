@@ -8,7 +8,7 @@ Gradient = gradient(log_pax_d,[a,x]);
 [a_hat,x_hat] = solve(Gradient,[a,x]);
 a_hat = simplify(a_hat);
 x_hat = simplify(x_hat);
-Hessian = simplify(hessian(log_pax_d, [a, x]));
+Hessian = -simplify(hessian(log_pax_d, [a, x]));
 sigma_res = inv(Hessian)
 [V, D] = eig(sigma_res);
 
