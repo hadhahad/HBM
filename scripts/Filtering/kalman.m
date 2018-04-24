@@ -1,4 +1,4 @@
-function [KF,ll]=kalman(KF,y)
+function [KF,ll]=kalman(KF,y, yp)
 % function evaluates the Kalman filter given by KF:
 %
 % KF.A   - state transition matrix
@@ -17,7 +17,7 @@ Ry = KF.C*KF.P*KF.C' + KF.R;
 iRy = inv(Ry);
 K = KF.P*KF.C'*iRy;
 KF.P = KF.P- K*KF.C*KF.P; % P = P -KCP;
-yp=KF.C*xnn1;
+% yp=KF.C*xnn1;
 KF.x = xnn1 + K*(y-yp);
 
 if nargin>1

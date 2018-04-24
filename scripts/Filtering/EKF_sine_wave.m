@@ -51,7 +51,7 @@ for t = 1:1:N
     KF.C = [sin(freq * dt * t + curr_state(2,t)), ...
          curr_state(1,t) * cos(freq * dt * t + curr_state(2,t))];
     y_hat(1,t) = curr_state(1,t) * sin(freq * dt * t + curr_state(2,t));
-    [KF,ll] = kalman(KF,y(1,t));
+    [KF,ll] = kalman(KF,y(1,t),y_hat(1,t));
 end
 
 
@@ -77,7 +77,7 @@ plot(abs(curr_state(1,:)));
 grid on;
 legend('true', 'EKF');
 xlabel('Time, t');
-ylabel('A_{n}');
+ylabel('A_{t}');
 
 subplot(2,2,4);
 plot(phi_true_arr);
@@ -86,4 +86,4 @@ plot(abs(curr_state(2,:)));
 grid on;
 legend('true', 'EKF');
 xlabel('Time, t');
-ylabel('\phi_{n}');
+ylabel('\phi_{t}');
