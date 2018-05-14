@@ -1,22 +1,19 @@
-function [mu,Sigma]=mixture_gauss2D(d,k,sharp)
-% Fitting a mixture of k Gaussians to the input data vector x,
-% Prior of each component i the mixture is assumed to be etremely flat:
-%   p(mu,sig)= N_mu(0,1/zeta*sig)* G_sig(a0,b0)
-% with zeta=0, a0=0, b0=0; 
+function [mu,Sigma,alpha] = mixture_gauss2D(d,k,sharp)
+% Fitting a mixture of k normal distributions to the input 
+% data vector d using the Expectation Maximization (EM).
 %
 % input:
-%   d    - Nx2 vector of data
-%   k    - maximum number of components
-%   sharp- initial sharpness of the components, relative to the spread of
-%          the data. The variance of initial components is:
+%   d     - Nx2 vector of data
+%   k     - maximum number of components
+%   sharp - initial sharpness of the components, relative to the spread of
+%           the data. The variance of initial components is:
 %             std(x)_k = (max(x)-min(x))/k/sharp
-%          Higher values of "sharp" favors smaller clusters.
+%           Higher values of "sharp" favors smaller clusters.
 %
 % output:
-%   mu   - mean values of the components
-%   sig  - variances of the components
-%   L    - probabilities of membership in each component
-%   Smu  - variances of the mean value estimates (var(mu))
+%   mu    - mean values of the components
+%   sig   - variances of the components
+%   alpha - probabilities of membership in each component
 
 %% ARGUMENTS PROCESSING
 if nargin<3
@@ -49,8 +46,7 @@ Sigma = diag([Sigma_x, Sigma_y]);
 Sigma = Sigma.*ones(2,2,k);
 
 % Assume uniform spread of data between components
-priorN = N/k;
-alpha = priorN*ones(k,1)/N;
+alpha = ones(k,1)/k;
 
 %% ITERATIONS
 EM_old = 0;
@@ -73,8 +69,9 @@ for iter = 1:iter_num
                 l(comp,i).*(d(i,:)-mu(comp,:))'*(d(i,:)-mu(comp,:));
         end
         Sigma(:,:,comp) = sum_mat./N_distr(comp);
+        alpha(comp) = N_distr(comp)/N;
     end
-    EM_new = sum(log(sum_comps))
+    EM_new = sum(log(sum_comps));
     if abs(EM_new - EM_old) < 1e-3
         break
     end
