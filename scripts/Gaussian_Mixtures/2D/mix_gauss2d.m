@@ -32,6 +32,7 @@ if plot_truepdf
     contour(x,y,N(3)/sum(N).*F3);
     grid on;
     xlabel('x'); ylabel('y'); zlabel('Probability Density');
+    title('True PDF');
 end
 
 %% Random Samples
