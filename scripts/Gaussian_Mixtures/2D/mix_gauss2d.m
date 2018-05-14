@@ -25,11 +25,12 @@ if plot_truepdf
     F3 = mvnpdf([X_axis(:) Y_axis(:)], mu3, Sig3);
     F3 = reshape(F3,length(Y_axis),length(X_axis));
     figure(2);
-    contour(x,y,N(1)/sum(N).*F1);
+    colormap jet;
+    mesh(x,y,N(1)/sum(N).*F1);
     hold on;
-    contour(x,y,N(2)/sum(N).*F2);
+    mesh(x,y,N(2)/sum(N).*F2);
     hold on;
-    contour(x,y,N(3)/sum(N).*F3);
+    mesh(x,y,N(3)/sum(N).*F3);
     grid on;
     xlabel('x'); ylabel('y'); zlabel('Probability Density');
     title('True PDF');
@@ -56,5 +57,5 @@ if plot_solution
     xlabel('x'); ylabel('y');
     grid on;
     title('EM - Gaussian Mixture in 2D');
-    legend('simulation', 'cluster mean','variance');
+    legend('simulation', 'cluster mean','error ellipse');
 end

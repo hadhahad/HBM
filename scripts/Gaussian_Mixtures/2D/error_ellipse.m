@@ -45,17 +45,17 @@ Y0  = mu(2);
 a   = chisquare_val*sqrt(max_evl);
 b   = chisquare_val*sqrt(min_evl);
 
-% the ellipse in x and y coordinates 
+% Ellipse in x and y coordinates 
 ellipse_x_r  = a*cos( theta_grid );
 ellipse_y_r  = b*sin( theta_grid );
 
-%Define a rotation matrix
+% Define a rotation matrix
 R = [ cos(phi) sin(phi); -sin(phi) cos(phi) ];
 
-%let's rotate the ellipse to some angle phi
+% Ellipse rotation
 r_ellipse = [ellipse_x_r;ellipse_y_r]' * R;
 
-% Draw the error ellipse
+% Plot the error ellipse
 fig = gcf;
 plot(X0,Y0,'r*');
 hold on;
